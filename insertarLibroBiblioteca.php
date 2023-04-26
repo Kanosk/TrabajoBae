@@ -23,7 +23,7 @@ require "modelo/biblioteca.php";
             <form id="insertarBibliotecaForm" action="insertarBiblioteca.php" method="post">
                 <div class="form-group">
                     <label>Id Biblioteca</label>
-                    <input type="text" class="form-control" name="id" value="<?php echo $biblioteca->getid(); ?>" >
+                    <input type="text" class="form-control" name="id">
                 </div>
 
                 <?php include "componentes/seleccionLibro.php"; ?>
