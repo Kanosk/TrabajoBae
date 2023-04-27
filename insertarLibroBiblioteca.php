@@ -12,6 +12,13 @@ require "modelo/biblioteca.php";
         <div class="jumbotron">
             <h1>Añadir nuevos libros a la biblioteca:</h1>
             <?php
+            if (isset($_GET['id']) && !empty($_GET['id']))
+            {
+                $idBiblioteca=$_GET['id'];
+                $biblioteca =new Biblioteca();
+                $biblioteca->setId($idBiblioteca);
+                $biblioteca= $biblioteca->obtenerBiblioteca();
+            }
             if (isset($_POST['idbiblioteca']) && isset($_POST['idlibro'])) {
                 $idbiblioteca = $_POST['idbiblioteca'];
                 $idlibro = $_POST['idlibro'];
@@ -23,7 +30,9 @@ require "modelo/biblioteca.php";
             <form id="insertarBibliotecaForm" action="insertarBiblioteca.php" method="post">
                 <div class="form-group">
                     <label>Id Biblioteca</label>
-                    <input type="text" class="form-control" name="id">
+                    <input type="number" class="form-control" name="id" value="<?php echo $biblioteca->getId(); ?>"
+                            readonly>
+                    <!-- <input type="text" class="form-control" name="id"> -->
                 </div>
 
                 <?php include "componentes/seleccionLibro.php"; ?>
