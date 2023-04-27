@@ -20,8 +20,6 @@ class BibliotecaLibros
             die();
         }
     }
-    
-
 
     private function obtenerRegistrosLibros($filtro = null, $orden = null)
     {
@@ -38,7 +36,7 @@ class BibliotecaLibros
     }
 
     function insertarNombreLibro()
-{
+    {
     try {
         // código para insertar el libro en la biblioteca
         $queryInsert = "INSERT INTO biblioteca_libros (idbiblioteca, idlibro) VALUES (:idbiblioteca, :idlibro)";
@@ -47,17 +45,22 @@ class BibliotecaLibros
         $stmtInsert->bindParam(":idlibro", $this->idlibro);
         $stmtInsert->execute();
 
+        // Instanciar un objeto de la clase Biblioteca
+        $biblioteca = new Biblioteca();
+        
         // Obtener el número de libros ingresados en la biblioteca
-        $numeroLibros = $this->obtenerNumeroLibros();
+        $numeroLibros = $biblioteca->obtenerNumeroLibros($this->idbiblioteca);
+        
         // Actualizar el número de libros ingresados en la biblioteca
-        $this->actualizarNumeroLibros();
+        $this->actualizarNumeroLibros($this->idbiblioteca);
         
         // Devolver el número de libros ingresados en la biblioteca
         return $numeroLibros;
     } catch (Exception $ex) {
         // código para manejar errores
     }
-}
+    }
+
 
     
 
@@ -82,10 +85,10 @@ class BibliotecaLibros
             return null;
         }
     }
-    public function actualizarNumeroLibros() {
-        $idBiblioteca = $_POST['idbiblioteca'];
-        $consulta = $this->db->prepare("UPDATE biblioteca_libros SET numerolibros = (SELECT COUNT(*) FROM biblioteca_libros WHERE idbiblioteca = :id) WHERE idbiblioteca = :id");
+    public function actualizarNumeroLibros($idBiblioteca) {
+        $consulta = $this->db->prepare("UPDATE bibliotecas SET numerolibros = (SELECT COUNT(*) FROM biblioteca_libros WHERE idbiblioteca = :id) WHERE id = :idbiblioteca");
         $consulta->bindParam(':id', $idBiblioteca);
+        $consulta->bindParam(':idbiblioteca', $idBiblioteca);
         $consulta->execute();
         return $consulta->rowCount();
     }

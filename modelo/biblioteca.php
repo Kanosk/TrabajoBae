@@ -169,6 +169,15 @@ class Biblioteca
         echo "Error al comprar biblioteca";
     }
     }
+    public function obtenerNumeroLibros($idBiblioteca) {
+        $querySelect = "SELECT numerolibros FROM bibliotecas WHERE id = :idBiblioteca";
+        $stmt = $this->db->prepare($querySelect);
+        $stmt->bindParam(":idBiblioteca", $idBiblioteca);
+        $stmt->execute();
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $resultado['numerolibros'];
+    }
+    
 
     
 

@@ -27,19 +27,18 @@ require "modelo/biblioteca.php";
                 echo $libros->insertarNombreLibro();
             }
             ?>
-            <form id="insertarBibliotecaForm" action="insertarBiblioteca.php" method="post">
+            <form id="insertarBibliotecaForm" action="listadobibliotecas.php" method="post">
                 <div class="form-group">
                     <label>Id Biblioteca</label>
                     <input type="number" class="form-control" name="id" value="<?php echo $biblioteca->getId(); ?>"
                             readonly>
-                    <!-- <input type="text" class="form-control" name="id"> -->
                 </div>
 
                 <?php include "componentes/seleccionLibro.php"; ?>
     
                 <input type="submit" value="Enviar">
             </form>
-    
+            <br>
             <a href="listadobibliotecas.php" class="btn btn-primary">Crear Biblioteca</a>
             <a href="listadobibliotecas.php" class="btn btn-secondary">Volver al listado</a>
         </div>
