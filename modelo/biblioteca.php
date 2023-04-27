@@ -72,12 +72,14 @@ class Biblioteca
         try {
             $queryBorrar = "DELETE FROM bibliotecas WHERE id= :id";
             $instanciaDB = $this->db->prepare($queryBorrar);
-
             $instanciaDB->bindParam(":id", $this->id);
-
             $respuestaBorrar = $instanciaDB->execute();
+            $queryBorrarRelaciones = "DELETE FROM biblioteca_libros WHERE idbiblioteca= :id";
+            $instanciaDBRelaciones = $this->db->prepare($queryBorrarRelaciones);
+            $instanciaDBRelaciones->bindParam(":id", $this->id);
+            $respuestaBorrarRelaciones = $instanciaDBRelaciones->execute();
 
-            if ($respuestaBorrar) {
+            if ($respuestaBorrar && $respuestaBorrarRelaciones) {
                 echo "Biblioteca eliminada correctamente";
                 //header("Location:index.php");
             } else {
