@@ -143,17 +143,31 @@ class Biblioteca
     }
     public function comprarBiblioteca($id) 
     {
-        $queryActualizacion = "UPDATE bibliotecas SET estado='Comprado' WHERE id=:id ;";
-        $actualizarEstado = $this->db->prepare($queryActualizacion);
-        $actualizarEstado->bindParam(":id", $id);
-        $actualizarEstado->execute();
-        if ($actualizarEstado) {
-            echo "Biblioteca comprada";
-        }else {
-            
-            echo "Error al comprar biblioteca";
-        }
+    $queryActualizacion = "UPDATE bibliotecas SET estado='Comprado' WHERE id=:id ;";
+    $actualizarEstado = $this->db->prepare($queryActualizacion);
+    $actualizarEstado->bindParam(":id", $id);
+    $actualizarEstado->execute();
+
+    $queryInsertar = "INSERT INTO compra_libros (idbiblioteca, idlibro)
+                      SELECT idbiblioteca, idlibro
+                      FROM biblioteca_libros
+                      WHERE idbiblioteca = :id;";
+    $insertarLibros = $this->db->prepare($queryInsertar);
+    $insertarLibros->bindParam(":id", $id);
+    $insertarLibros->execute();
+
+    $queryEliminar = "DELETE FROM biblioteca_libros WHERE idbiblioteca = :id;";
+    $eliminarLibros = $this->db->prepare($queryEliminar);
+    $eliminarLibros->bindParam(":id", $id);
+    $eliminarLibros->execute();
+
+    if ($actualizarEstado && $insertarLibros && $eliminarLibros) {
+        echo "Biblioteca comprada";
+    } else {
+        echo "Error al comprar biblioteca";
     }
+    }
+
     
 
     /**
