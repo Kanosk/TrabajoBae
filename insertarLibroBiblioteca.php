@@ -31,8 +31,8 @@ require "modelo/biblioteca.php";
                 <input type="submit" value="Enviar">
             </form>
     
-            <a href="indexBibliotecas.php" class="btn btn-primary">Crear Biblioteca</a>
-            <a href="indexBibliotecas.php" class="btn btn-secondary">Volver al listado</a>
+            <a href="listadobibliotecas.php" class="btn btn-primary">Crear Biblioteca</a>
+            <a href="listadobibliotecas.php" class="btn btn-secondary">Volver al listado</a>
         </div>
     </div>
 </body>
